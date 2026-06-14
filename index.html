@@ -1,0 +1,948 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aroma Brew | Cafe Dastaan - Coffee & Tea Heritage</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Inter & Playfair Display for Urdu-Subcontinent Elegance -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        coffee: {
+                            50: '#fdfcf7',
+                            100: '#f8f4eb',
+                            200: '#e7dec8',
+                            300: '#d2be9b',
+                            400: '#bc9c6e',
+                            500: '#a77f52',
+                            600: '#8e653e',
+                            700: '#6f4e32',
+                            800: '#4d3623',
+                            900: '#2d2015',
+                            950: '#1a120b', // Dark Mocha Base
+                        },
+                        pakistan: {
+                            50: '#f0fdf4',
+                            100: '#dcfce7',
+                            800: '#064e3b', // Rich Forest Emerald
+                            900: '#022c22', // Deep Mughal Velvet Green
+                            950: '#011c15', 
+                        },
+                        gold: {
+                            DEFAULT: '#d4af37',
+                            light: '#f1d271',
+                            dark: '#aa841c',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        serif: ['Playfair Display', 'serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Custom smooth scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #011c15;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #d4af37;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #f1d271;
+        }
+        /* Card click animation style */
+        .click-active-pulse {
+            animation: pulse-border 0.4s ease-out;
+        }
+        @keyframes pulse-border {
+            0% { box-shadow: 0 0 0 0px rgba(212, 175, 55, 0.7); }
+            100% { box-shadow: 0 0 0 10px rgba(212, 175, 55, 0); }
+        }
+    </style>
+</head>
+<body class="bg-coffee-100 font-sans text-coffee-900 overflow-x-hidden">
+
+    <!-- STICKY HEADER -->
+    <header class="bg-pakistan-950 text-white sticky top-0 z-50 border-b-2 border-gold shadow-xl transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                <!-- Brand Logo & Name -->
+                <a href="#home" class="flex items-center gap-3 group">
+                    <!--img src="" alt="Aroma Brew Logo" class="h-12 w-12 rounded-full border-2 border-gold object-cover group-hover:scale-105 transition-transform duration-300"-->
+                    <div>
+                        <span class="block text-xl font-serif font-bold tracking-wider text-gold group-hover:text-gold-light transition-colors">AROMA BREW</span>
+                        <span class="block text-[9px] tracking-widest text-coffee-300 uppercase -mt-1 font-sans"> </span>
+                    </div>
+                </a>
+
+                <!-- Desktop Navigation Menu -->
+                <nav class="hidden md:flex space-x-8">
+                    <a href="#home" class="text-coffee-100 hover:text-gold font-medium tracking-wide transition-colors duration-200">Home</a>
+                    <a href="#story" class="text-coffee-100 hover:text-gold font-medium tracking-wide transition-colors duration-200">Our Heritage</a>
+                    <a href="#menu" class="text-coffee-100 hover:text-gold font-medium tracking-wide transition-colors duration-200">Dastaan Menu</a>
+                    <a href="#reserve" class="text-coffee-100 hover:text-gold font-medium tracking-wide transition-colors duration-200">Book a Baithak</a>
+                    <a href="#contact" class="text-coffee-100 hover:text-gold font-medium tracking-wide transition-colors duration-200">Locate Us</a>
+                </nav>
+
+                <!-- Action Button and Cart Widget -->
+                <div class="flex items-center gap-4">
+                    <!-- Interactive Order Button (Launches Menu Anchor) -->
+                    <a href="#menu" class="hidden sm:inline-flex items-center bg-gold hover:bg-gold-light text-pakistan-950 font-bold px-5 py-2.5 rounded-full shadow-md transition-all duration-300 transform hover:-translate-y-0.5">
+                        <i class="fa-solid fa-mug-hot mr-2"></i> Order Online
+                    </a>
+
+                    <!-- Cart Icon Button with Badges -->
+                    <button onclick="toggleCart()" class="relative p-2.5 text-coffee-100 hover:text-gold transition-colors focus:outline-none" aria-label="Open Cart">
+                        <i class="fa-solid fa-bag-shopping text-2xl"></i>
+                        <span id="cart-badge" class="absolute -top-1 -right-1 bg-red-600 text-white font-bold text-xs w-5 h-5 rounded-full flex items-center justify-center border-2 border-pakistan-950 opacity-0 transition-all duration-300">0</span>
+                    </button>
+
+                    <!-- Mobile Menu toggle button -->
+                    <button onclick="toggleMobileNav()" class="md:hidden p-2 text-coffee-100 hover:text-gold transition-colors focus:outline-none">
+                        <i id="mobile-nav-icon" class="fa-solid fa-bars text-2xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Dropdown Navigation Menu -->
+        <div id="mobile-nav" class="hidden md:hidden bg-pakistan-900 border-t border-pakistan-800 transition-all duration-300">
+            <div class="px-2 pt-2 pb-4 space-y-1">
+                <a href="#home" onclick="toggleMobileNav()" class="block px-3 py-2.5 rounded-md text-base font-medium text-coffee-100 hover:bg-pakistan-800 hover:text-gold">Home</a>
+                <a href="#story" onclick="toggleMobileNav()" class="block px-3 py-2.5 rounded-md text-base font-medium text-coffee-100 hover:bg-pakistan-800 hover:text-gold">Our Heritage</a>
+                <a href="#menu" onclick="toggleMobileNav()" class="block px-3 py-2.5 rounded-md text-base font-medium text-coffee-100 hover:bg-pakistan-800 hover:text-gold">Dastaan Menu</a>
+                <a href="#reserve" onclick="toggleMobileNav()" class="block px-3 py-2.5 rounded-md text-base font-medium text-coffee-100 hover:bg-pakistan-800 hover:text-gold">Book a Baithak</a>
+                <a href="#contact" onclick="toggleMobileNav()" class="block px-3 py-2.5 rounded-md text-base font-medium text-coffee-100 hover:bg-pakistan-800 hover:text-gold">Locate Us</a>
+                <a href="#menu" onclick="toggleMobileNav()" class="block w-full text-center bg-gold hover:bg-gold-light text-pakistan-950 font-bold py-3 mt-2 rounded-md">
+                    <i class="fa-solid fa-mug-hot mr-2"></i> Order Now
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- HERO SECTION WITH FIXED CORRECTED CIRCLE -->
+    <section id="home" class="relative min-h-[calc(100vh-5rem)] flex items-center justify-center py-16 px-4 sm:px-6 lg:px-8 overflow-hidden bg-pakistan-950">
+        <!-- Background Layer -->
+        <div class="absolute inset-0 z-0 opacity-20">
+            <img src="" alt="Aesthetic Café Backdrop" class="w-full h-full object-cover filter blur-md">
+        </div>
+        <div class="absolute inset-0 bg-gradient-to-t from-pakistan-950 via-pakistan-950/80 to-transparent z-10"></div>
+
+        <!-- Hero Content Box -->
+        <div class="relative z-20 text-center max-w-4xl mx-auto flex flex-col items-center">
+            
+            <!-- FIXED HOME PAGE LOGO CIRCLE (Guaranteed perfect geometry, aspect ratio, & glowing frame) -->
+            <div class="relative mb-8 group flex justify-center items-center">
+                <!-- Glowing animated backdrop rings -->
+                <div class="absolute w-44 h-44 sm:w-52 sm:h-52 rounded-full bg-gradient-to-r from-gold-dark via-gold to-gold-light blur-lg opacity-40 group-hover:opacity-80 transition duration-1000 group-hover:duration-200"></div>
+                <!-- Precision Inner Shield Circular Frame ->
+                <div class="relative w-40 h-40 sm:w-48 sm:h-48 rounded-full border-4 border-gold shadow-2xl overflow-hidden bg-pakistan-950 flex items-center justify-center">
+                    <img src="" alt="Aroma Brew Logo" class="w-full h-full object-cover rounded-full transform transition-transform duration-500 hover:scale-110">
+                </div> -->
+            </div>
+
+            <!-- Elevated Mughal Craft Typography -->
+            <span class="text-gold font-serif text-lg italic tracking-widest mb-2 block">خوش آمدید — Warmly Welcoming You</span>
+            <h1 class="text-4xl sm:text-6xl font-serif font-bold text-coffee-50 tracking-tight leading-tight">
+                Crafted Coffee, <br class="sm:hidden">
+                <span class="text-gold italic">Karak Heritage</span>
+            </h1>
+            
+            <p class="mt-6 text-lg sm:text-xl text-coffee-200 font-light max-w-2xl leading-relaxed">
+                Step into a story of rich spices, single-origin roasts, and authentic Subcontinental hospitality. Experience the elegant confluence of craft espresso and traditional Peshawari & Kashmiri flavors.
+            </p>
+
+            <!-- Call to Actions -->
+            <div class="mt-10 flex flex-col sm:flex-row gap-4 justify-center items-center w-full sm:w-auto">
+                <a href="#menu" class="w-full sm:w-auto px-8 py-4 bg-gold hover:bg-gold-light text-pakistan-950 font-bold rounded-full text-lg shadow-lg hover:shadow-gold/20 transform hover:-translate-y-1 transition-all duration-300">
+                    <i class="fa-solid fa-mug-hot mr-2"></i> Explore Brews & Chai
+                </a>
+                <a href="#reserve" class="w-full sm:w-auto px-8 py-4 border-2 border-gold text-gold hover:bg-gold hover:text-pakistan-950 font-bold rounded-full text-lg transition-all duration-300 transform hover:-translate-y-1">
+                    Reserve a Cozy Baithak
+                </a>
+            </div>
+
+            <!-- Scroll Indicator -->
+            <div class="mt-16 animate-bounce text-gold/60">
+                <a href="#story" aria-label="Scroll Down">
+                    <i class="fa-solid fa-chevron-down text-2xl"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- AMENITIES & HIGHLIGHTS -->
+    <section class="bg-pakistan-950 text-white py-12 border-t border-b border-pakistan-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+                <div class="p-4 transform hover:scale-105 transition-transform duration-300">
+                    <div class="text-gold text-3xl mb-2"><i class="fa-solid fa-leaf"></i></div>
+                    <h3 class="font-bold text-lg font-serif text-gold-light">Organic Tea Leaves</h3>
+                    <p class="text-sm text-coffee-300 mt-1">Sourced from Hunza & Assam</p>
+                </div>
+                <div class="p-4 transform hover:scale-105 transition-transform duration-300">
+                    <div class="text-gold text-3xl mb-2"><i class="fa-solid fa-fire-burner"></i></div>
+                    <h3 class="font-bold text-lg font-serif text-gold-light">Karak Slow Brewed</h3>
+                    <p class="text-sm text-coffee-300 mt-1">Traditional Brass Samovars</p>
+                </div>
+                <div class="p-4 transform hover:scale-105 transition-transform duration-300">
+                    <div class="text-gold text-3xl mb-2"><i class="fa-solid fa-handshake-angle"></i></div>
+                    <h3 class="font-bold text-lg font-serif text-gold-light">Mehman Nawazi</h3>
+                    <p class="text-sm text-coffee-300 mt-1">Legendary Warm Hospitality</p>
+                </div>
+                <div class="p-4 transform hover:scale-105 transition-transform duration-300">
+                    <div class="text-gold text-3xl mb-2"><i class="fa-solid fa-cookie-bite"></i></div>
+                    <h3 class="font-bold text-lg font-serif text-gold-light">Desi Fusion Pastries</h3>
+                    <p class="text-sm text-coffee-300 mt-1">Baked Warm Daily</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- OUR STORY / HERITAGE SECTION -->
+    <section id="story" class="py-20 bg-coffee-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+                
+                <!-- Story Graphics/Image Frame -->
+                <div class="lg:col-span-5 relative">
+                    <div class="absolute -top-4 -left-4 w-full h-full rounded-2xl bg-gold/10 border border-gold/20 -z-0"></div>
+                    <div class="relative z-10 rounded-2xl overflow-hidden shadow-2xl border border-coffee-200">
+                        <!-- Use logo inside elegant Pakistani framing style -->
+                        <img src="" alt="Aroma Brew Chalk Wall Board Artwork" class="w-full object-cover">
+                        <div class="absolute bottom-0 inset-x-0 bg-gradient-to-t from-pakistan-950 via-pakistan-950/80 to-transparent p-6 text-white text-center">
+                            <span class="text-gold font-serif italic text-lg">Cafe Dastaan Flagship Blueprint</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Story Text Panel -->
+                <div class="lg:col-span-7 flex flex-col justify-center space-y-6">
+                    <div class="inline-flex items-center gap-2 text-gold font-semibold uppercase tracking-widest text-sm">
+                        <i class="fa-solid fa-feather-pointed"></i> The Dastaan Ritual
+                    </div>
+                    <h2 class="text-4xl sm:text-5xl font-serif font-bold text-pakistan-900 leading-tight">
+                        Brewing Stories, Crafting Connections across Cultures
+                    </h2>
+                    <div class="h-1 w-20 bg-gold rounded"></div>
+                    <p class="text-coffee-700 text-lg leading-relaxed">
+                        At <strong class="text-pakistan-800 font-semibold">Aroma Brew - Cafe Dastaan</strong>, we celebrate the vibrant coffeehouse culture of old Lahore and the historic tea-stalls of Karachi. We combine our premium single-origin coffee bean roasting with the rich legacy of Subcontinental tea brewing.
+                    </p>
+                    <p class="text-coffee-700 text-lg leading-relaxed">
+                        Our space has been conceptualized for comfort. Cozy low-seating <em>baithaks</em>, rich emerald textiles, warm wood craftsmanship, and classic slow-dripping chai create an ambient refuge. It’s a space designed for endless talk, deep writing, artistic collaborations, and true peace.
+                    </p>
+                    <div>
+                        <a href="#reserve" class="inline-flex items-center text-pakistan-900 hover:text-gold-dark font-bold group text-lg transition-colors">
+                            Secure your favorite Baithak corner today 
+                            <i class="fa-solid fa-arrow-right ml-2 transform group-hover:translate-x-1.5 transition-transform"></i>
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- INTERACTIVE MENU SECTION (EASY CLICK ADD TO CART) -->
+    <section id="menu" class="py-20 bg-coffee-100">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-2xl mx-auto mb-12">
+                <span class="text-gold font-semibold uppercase tracking-widest text-sm"><i class="fa-solid fa-mug-hot"></i> Handcrafted Offerings</span>
+                <h2 class="text-4xl font-serif font-bold text-pakistan-900 mt-2">Dastaan Menu</h2>
+                <div class="h-1 w-16 bg-gold mx-auto mt-4"></div>
+                <p class="text-coffee-600 mt-4 text-base">Click **anywhere on a drink or delicacy card** to immediately add it to your order. Fast, simple, and delicious!</p>
+            </div>
+
+            <!-- Tab Filter Controls -->
+            <div class="flex justify-center flex-wrap gap-2 mb-10 max-w-lg mx-auto bg-coffee-200/50 p-1.5 rounded-full border border-coffee-200">
+                <button onclick="filterMenu('hot')" id="btn-hot" class="menu-tab-btn active w-1/3 py-2 text-sm font-semibold rounded-full text-center transition-all duration-300">
+                    Hot Specialties
+                </button>
+                <button onclick="filterMenu('cold')" id="btn-cold" class="menu-tab-btn w-1/3 py-2 text-sm font-semibold rounded-full text-center transition-all duration-300 text-coffee-700 hover:text-coffee-950">
+                    Iced Crafts
+                </button>
+                <button onclick="filterMenu('bakery')" id="btn-bakery" class="menu-tab-btn w-1/3 py-2 text-sm font-semibold rounded-full text-center transition-all duration-300 text-coffee-700 hover:text-coffee-950">
+                    Desi Treats
+                </button>
+            </div>
+
+            <!-- Menu Cards Container (Dynamic Generation with Highlight FX) -->
+            <div id="menu-items-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Javascript will render custom Pakistani drinks and delicacies here -->
+            </div>
+        </div>
+    </section>
+
+    <!-- RESERVATIONS PORTAL -->
+    <section id="reserve" class="py-20 bg-pakistan-900 text-white relative overflow-hidden">
+        <div class="absolute inset-0 opacity-10 bg-[radial-gradient(#d4af37_1px,transparent_1px)] [background-size:16px_16px]"></div>
+        
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="text-center max-w-xl mx-auto mb-10">
+                <span class="text-gold font-semibold uppercase tracking-widest text-sm"><i class="fa-solid fa-couch"></i> Book a Baithak</span>
+                <h2 class="text-4xl font-serif font-bold text-coffee-50 mt-2">Reserve a Hospitality Space</h2>
+                <div class="h-1 w-16 bg-gold mx-auto mt-4"></div>
+                <p class="text-coffee-300 mt-4">Book an authentic low-seating floor floor pillow circle, a traditional leather-bound library desk, or a sunny courtyard window bench.</p>
+            </div>
+
+            <!-- Reservation Form Grid -->
+            <form id="reservation-form" onsubmit="handleReservation(event)" class="bg-pakistan-950 border border-pakistan-800 p-8 rounded-2xl shadow-2xl space-y-6">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <label for="res-name" class="block text-sm font-semibold text-coffee-300 mb-2">Your Name</label>
+                        <div class="relative">
+                            <i class="fa-solid fa-user absolute left-3.5 top-3.5 text-coffee-500"></i>
+                            <input type="text" id="res-name" required class="w-full bg-pakistan-900 border border-pakistan-800 rounded-lg pl-10 pr-4 py-3 text-white placeholder-coffee-600 focus:outline-none focus:border-gold transition-colors" placeholder="Faisal Khan">
+                        </div>
+                    </div>
+                    <div>
+                        <label for="res-email" class="block text-sm font-semibold text-coffee-300 mb-2">Email Address</label>
+                        <div class="relative">
+                            <i class="fa-solid fa-envelope absolute left-3.5 top-3.5 text-coffee-500"></i>
+                            <input type="email" id="res-email" required class="w-full bg-pakistan-900 border border-pakistan-800 rounded-lg pl-10 pr-4 py-3 text-white placeholder-coffee-600 focus:outline-none focus:border-gold transition-colors" placeholder="faisal@example.com">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
+                    <div>
+                        <label for="res-date" class="block text-sm font-semibold text-coffee-300 mb-2">Preferred Date</label>
+                        <input type="date" id="res-date" required class="w-full bg-pakistan-900 border border-pakistan-800 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-gold transition-colors">
+                    </div>
+                    <div>
+                        <label for="res-time" class="block text-sm font-semibold text-coffee-300 mb-2">Arrival Time</label>
+                        <select id="res-time" required class="w-full bg-pakistan-900 border border-pakistan-800 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-gold transition-colors">
+                            <option value="09:00">09:00 AM</option>
+                            <option value="11:00">11:00 AM</option>
+                            <option value="13:00">01:00 PM</option>
+                            <option value="15:00">03:00 PM</option>
+                            <option value="17:00">05:00 PM</option>
+                            <option value="19:00">07:00 PM</option>
+                            <option value="21:00">09:00 PM</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="res-guests" class="block text-sm font-semibold text-coffee-300 mb-2">Number of Guests</label>
+                        <select id="res-guests" required class="w-full bg-pakistan-900 border border-pakistan-800 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-gold transition-colors">
+                            <option value="1">1 Person</option>
+                            <option value="2">2 People</option>
+                            <option value="4">4 People</option>
+                            <option value="6">Heritage Group (6-10 People)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-sm font-semibold text-coffee-300 mb-2">Desired Atmosphere Section</label>
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                        <label class="flex items-center justify-between p-3.5 bg-pakistan-900 border border-pakistan-800 rounded-lg cursor-pointer hover:border-gold/50 transition-colors">
+                            <span class="text-sm">Mughal Baithak (Floor Seating)</span>
+                            <input type="radio" name="section-choice" value="baithak" checked class="accent-gold h-4 w-4">
+                        </label>
+                        <label class="flex items-center justify-between p-3.5 bg-pakistan-900 border border-pakistan-800 rounded-lg cursor-pointer hover:border-gold/50 transition-colors">
+                            <span class="text-sm">Classic Library Vaults</span>
+                            <input type="radio" name="section-choice" value="vaults" class="accent-gold h-4 w-4">
+                        </label>
+                        <label class="flex items-center justify-between p-3.5 bg-pakistan-900 border border-pakistan-800 rounded-lg cursor-pointer hover:border-gold/50 transition-colors">
+                            <span class="text-sm">Glow Courtyard</span>
+                            <input type="radio" name="section-choice" value="courtyard" class="accent-gold h-4 w-4">
+                        </label>
+                    </div>
+                </div>
+
+                <div class="pt-4">
+                    <button type="submit" class="w-full py-4 bg-gold hover:bg-gold-light text-pakistan-950 font-bold rounded-lg text-lg transition-colors flex items-center justify-center gap-2 shadow-lg">
+                        <i class="fa-solid fa-calendar-check"></i> Complete Spot Booking
+                    </button>
+                </div>
+            </form>
+        </div>
+    </section>
+
+    <!-- TESTIMONIALS SECTION -->
+    <section class="py-20 bg-coffee-100 border-t border-coffee-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-xl mx-auto mb-14">
+                <span class="text-gold font-semibold uppercase tracking-widest text-sm"><i class="fa-solid fa-quote-left"></i> Beloved Guest Reviews</span>
+                <h2 class="text-4xl font-serif font-bold text-pakistan-900 mt-2">What Our Community Says</h2>
+                <div class="h-1 w-16 bg-gold mx-auto mt-4"></div>
+            </div>
+
+            <!-- Review Cards Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Testimonial 1 -->
+                <div class="bg-white p-8 rounded-2xl shadow-md border border-coffee-200/40 relative">
+                    <div class="text-gold mb-4 text-xl">
+                        <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                    </div>
+                    <p class="text-coffee-700 italic mb-6">"The Kashmiri Pink Tea here transports me straight to chilly evenings in Murree. Perfectly salted, creamy, and topped with rich nuts. A absolute masterpiece."</p>
+                    <div class="flex items-center gap-3">
+                        <div class="bg-pakistan-100 w-10 h-10 rounded-full flex items-center justify-center text-pakistan-800 font-bold">Z</div>
+                        <div>
+                            <h4 class="font-bold text-pakistan-900 text-sm">Zainab Malik</h4>
+                            <span class="text-xs text-coffee-500">Artist & Writer</span>
+                        </div>
+                    </div>
+                </div>
+                <!-- Testimonial 2 -->
+                <div class="bg-white p-8 rounded-2xl shadow-md border border-coffee-200/40 relative">
+                    <div class="text-gold mb-4 text-xl">
+                        <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                    </div>
+                    <p class="text-coffee-700 italic mb-6">"A brilliant combination of specialty single-origin espresso and local cardamom Karak flavors. Finally, a workspace with robust Wi-Fi and high-grade tea!"</p>
+                    <div class="flex items-center gap-3">
+                        <div class="bg-pakistan-100 w-10 h-10 rounded-full flex items-center justify-center text-pakistan-800 font-bold">U</div>
+                        <div>
+                            <h4 class="font-bold text-pakistan-900 text-sm">Usman Ahmed</h4>
+                            <span class="text-xs text-coffee-500">Software Developer</span>
+                        </div>
+                    </div>
+                </div>
+                <!-- Testimonial 3 -->
+                <div class="bg-white p-8 rounded-2xl shadow-md border border-coffee-200/40 relative">
+                    <div class="text-gold mb-4 text-xl">
+                        <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                    </div>
+                    <p class="text-coffee-700 italic mb-6">"Their Shahi Tukray pudding paired with a shot of signature espresso is magical. Elegant seating arrangements and the kindest hospitality."</p>
+                    <div class="flex items-center gap-3">
+                        <div class="bg-pakistan-100 w-10 h-10 rounded-full flex items-center justify-center text-pakistan-800 font-bold">A</div>
+                        <div>
+                            <h4 class="font-bold text-pakistan-900 text-sm">Amara Lodhi</h4>
+                            <span class="text-xs text-coffee-500">Food Journalist</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- LOCATION & HOURS MAP -->
+    <section id="contact" class="py-20 bg-coffee-50 border-t border-coffee-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                
+                <!-- Contact Details -->
+                <div class="space-y-8">
+                    <div>
+                        <span class="text-gold font-semibold uppercase tracking-widest text-sm"><i class="fa-solid fa-map-location-dot"></i> Visit Today</span>
+                        <h2 class="text-4xl font-serif font-bold text-pakistan-900 mt-2">Where to Find Us</h2>
+                        <div class="h-1 w-16 bg-gold mt-4"></div>
+                    </div>
+
+                    <div class="space-y-6 text-lg">
+                        <div class="flex items-start gap-4">
+                            <span class="text-gold text-2xl mt-1"><i class="fa-solid fa-location-dot"></i></span>
+                            <div>
+                                <h4 class="font-bold text-pakistan-900">Our Heritage Sanctuary</h4>
+                                <p class="text-coffee-700">Dastaan Tower, Main Boulevard, Gulberg III, Lahore, Pakistan</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start gap-4">
+                            <span class="text-gold text-2xl mt-1"><i class="fa-solid fa-clock"></i></span>
+                            <div>
+                                <h4 class="font-bold text-pakistan-900">Tea & Coffee Hours</h4>
+                                <p class="text-coffee-700">Monday - Friday: 8:00 AM - Midnight</p>
+                                <p class="text-coffee-700">Saturday - Sunday: 9:00 AM - 2:00 AM</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start gap-4">
+                            <span class="text-gold text-2xl mt-1"><i class="fa-solid fa-phone"></i></span>
+                            <div>
+                                <h4 class="font-bold text-pakistan-900">Phone & Support</h4>
+                                <p class="text-coffee-700">+92 (42) 111-276-621</p>
+                                <p class="text-coffee-700">dastaan@aromabrew.com</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Newsletter Sign Up Form -->
+                    <div class="bg-coffee-200/50 p-6 rounded-2xl border border-coffee-200">
+                        <h4 class="font-serif font-bold text-pakistan-900 text-lg mb-2">Join Our Mehfil Club</h4>
+                        <p class="text-sm text-coffee-700 mb-4">Receive invitations to local poetry nights, classical sitar performance schedules, and exclusive discount codes.</p>
+                        <form onsubmit="handleNewsletter(event)" class="flex gap-2">
+                            <input type="email" id="news-email" required class="flex-1 px-4 py-2.5 rounded-lg border border-coffee-300 text-sm focus:outline-none focus:border-gold" placeholder="Enter your email">
+                            <button type="submit" class="bg-gold hover:bg-gold-light text-pakistan-950 font-bold px-5 py-2.5 rounded-lg text-sm transition-colors">Join</button>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Map Frame -->
+                <div class="relative rounded-2xl overflow-hidden shadow-2xl h-[400px] border border-coffee-200">
+                    <div class="absolute inset-0 bg-pakistan-950 flex flex-col items-center justify-center p-6 text-center">
+                        <div class="text-gold text-5xl mb-4 animate-pulse"><i class="fa-solid fa-map-marked-alt"></i></div>
+                        <h3 class="text-white font-serif font-bold text-xl mb-2">Gulberg Courtyard Hub</h3>
+                        <p class="text-coffee-300 text-sm max-w-sm mb-6">Located behind beautiful traditional terracotta structures, off main Boulevard. Free valet parking is provided for reserved Baithak spots.</p>
+                        <div class="inline-flex gap-3">
+                            <a href="https://maps.google.com" target="_blank" class="px-5 py-2.5 bg-gold text-pakistan-950 font-bold rounded-lg text-xs hover:bg-gold-light transition-colors"><i class="fa-solid fa-route mr-1"></i> Open Google Maps</a>
+                            <button onclick="showToast('Address details copied to clipboard!')" class="px-5 py-2.5 border border-gold text-gold font-bold rounded-lg text-xs hover:bg-gold hover:text-pakistan-950 transition-colors"><i class="fa-solid fa-copy mr-1"></i> Copy Address</button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="bg-pakistan-950 text-white pt-16 pb-8 border-t-2 border-gold">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-10 mb-12">
+                
+                <!-- Col 1: Brand Info -->
+                <div class="space-y-4">
+                    <a href="#home" class="flex items-center gap-3">
+                        <!--img src="" alt="Aroma Brew Logo" class="h-10 w-10 rounded-full border border-gold object-cover"-->
+                        <span class="text-lg font-serif font-bold tracking-wider text-gold">AROMA BREW</span>
+                    </a>
+                    <p class="text-sm text-coffee-300">
+                        Celebrating craft single-origins and subcontinental tea-house heritage in beautiful, cozy spaces since 2023.
+                    </p>
+                    <!-- Social Links -->
+                    <div class="flex gap-4 text-xl">
+                        <a href="#" class="text-coffee-300 hover:text-gold transition-colors" aria-label="Facebook"><i class="fa-brands fa-facebook"></i></a>
+                        <a href="#" class="text-coffee-300 hover:text-gold transition-colors" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+                        <a href="#" class="text-coffee-300 hover:text-gold transition-colors" aria-label="Twitter"><i class="fa-brands fa-x-twitter"></i></a>
+                        <a href="#" class="text-coffee-300 hover:text-gold transition-colors" aria-label="Pinterest"><i class="fa-brands fa-pinterest"></i></a>
+                    </div>
+                </div>
+
+                <!-- Col 2: Navigation Links -->
+                <div>
+                    <h4 class="font-serif font-semibold text-gold mb-4 tracking-wide uppercase text-sm">Navigation</h4>
+                    <ul class="space-y-2 text-sm text-coffee-300">
+                        <li><a href="#home" class="hover:text-gold transition-colors">Home Base</a></li>
+                        <li><a href="#story" class="hover:text-gold transition-colors">Heritage Stories</a></li>
+                        <li><a href="#menu" class="hover:text-gold transition-colors">Dastaan Menu</a></li>
+                        <li><a href="#reserve" class="hover:text-gold transition-colors">Book a Baithak</a></li>
+                    </ul>
+                </div>
+
+                <!-- Col 3: Resources -->
+                <div>
+                    <h4 class="font-serif font-semibold text-gold mb-4 tracking-wide uppercase text-sm">Signature Crafts</h4>
+                    <ul class="space-y-2 text-sm text-coffee-300">
+                        <li><a href="#menu" class="hover:text-gold transition-colors">Mughal Chai Blends</a></li>
+                        <li><a href="#menu" class="hover:text-gold transition-colors">Artisanal Saffron Lattes</a></li>
+                        <li><a href="#menu" class="hover:text-gold transition-colors">Desi Fusion Cakes</a></li>
+                        <li><a href="#" class="hover:text-gold transition-colors">Catering Mehfils</a></li>
+                    </ul>
+                </div>
+
+                <!-- Col 4: Quick Contact Info -->
+                <div>
+                    <h4 class="font-serif font-semibold text-gold mb-4 tracking-wide uppercase text-sm">Get in Touch</h4>
+                    <ul class="space-y-2 text-sm text-coffee-300">
+                        <li><span class="font-semibold text-white">Call:</span> +92 (42) 111-276-621</li>
+                        <li><span class="font-semibold text-white">Support:</span> dastaan@aromabrew.com</li>
+                        <li><span class="font-semibold text-white">Cafe:</span> Gulberg III, Lahore, Pakistan</li>
+                    </ul>
+                </div>
+
+            </div>
+
+            <!-- Bottom Copyright Bar -->
+            <div class="border-t border-pakistan-800 pt-8 text-center text-sm text-coffee-400">
+                <p>&copy; 2026 Aroma Brew Cafe Dastaan. All rights reserved. Celebrating warmth, hospitality, and exquisite brewing.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- SLIDE-OUT CART PANEL DRAWER -->
+    <div id="cart-drawer" class="fixed inset-y-0 right-0 z-50 w-full max-w-md bg-white shadow-2xl border-l border-coffee-200 transform translate-x-full transition-transform duration-300 flex flex-col">
+        <!-- Drawer Header -->
+        <div class="bg-pakistan-950 text-white p-6 flex justify-between items-center border-b-2 border-gold">
+            <h3 class="font-serif font-bold text-xl text-gold flex items-center gap-2">
+                <i class="fa-solid fa-shopping-basket"></i> Your Fresh Order
+            </h3>
+            <button onclick="toggleCart()" class="p-2 text-coffee-300 hover:text-white transition-colors focus:outline-none">
+                <i class="fa-solid fa-xmark text-xl"></i>
+            </button>
+        </div>
+
+        <!-- Drawer Items Content -->
+        <div id="cart-items-box" class="flex-1 overflow-y-auto p-6 space-y-4">
+            <!-- Dynamic items loaded here by Javascript -->
+            <div id="empty-cart-message" class="text-center py-10">
+                <div class="text-coffee-300 text-5xl mb-4"><i class="fa-solid fa-mug-hot"></i></div>
+                <h4 class="font-bold text-coffee-950 mb-1">Your cart is currently empty</h4>
+                <p class="text-sm text-coffee-500 max-w-xs mx-auto">Click directly on any menu item card or the "Add to Order" button to start filling your basket!</p>
+            </div>
+        </div>
+
+        <!-- Drawer Footer with Total, Tax and Checkout Button -->
+        <div id="cart-footer" class="border-t border-coffee-200 p-6 bg-coffee-50 space-y-4 hidden">
+            <div class="flex justify-between items-center text-sm text-coffee-700">
+                <span>Subtotal Price</span>
+                <span id="cart-subtotal" class="font-bold text-coffee-950">Rs. 0</span>
+            </div>
+            <div class="flex justify-between items-center text-sm text-coffee-700">
+                <span>Estimated Punjab Sales Tax (16%)</span>
+                <span id="cart-tax" class="font-bold text-coffee-950">Rs. 0</span>
+            </div>
+            <div class="border-t border-coffee-200 pt-3 flex justify-between items-center text-lg font-bold text-coffee-950">
+                <span>Total Due</span>
+                <span id="cart-total" class="text-pakistan-800">Rs. 0</span>
+            </div>
+            <button onclick="checkoutOrder()" class="w-full py-4 bg-gold hover:bg-gold-light text-pakistan-950 font-bold rounded-lg text-center shadow-lg transition-colors flex items-center justify-center gap-2">
+                <i class="fa-solid fa-square-check"></i> Place Coffee & Tea Order
+            </button>
+        </div>
+    </div>
+
+    <!-- Backdrop for Drawer and Modal Overlay -->
+    <div id="backdrop" onclick="closeAllDrawers()" class="fixed inset-0 bg-black/60 z-40 hidden transition-opacity duration-300"></div>
+
+    <!-- FLOATING TOAST ALERTS (No native alert/confirm popups) -->
+    <div id="toast-container" class="fixed bottom-6 left-6 z-50 flex flex-col gap-3 max-w-sm w-full">
+        <!-- Populated on-demand by showToast() JavaScript -->
+    </div>
+
+    <!-- JAVASCRIPT SYSTEM LOGIC -->
+    <script>
+        /* --- Coffee & Pakistani Specialties Database (PKR Pricing) --- */
+        const MENU_PRODUCTS = [
+            // HOT SPECIALTIES
+            { id: 1, name: "Karak Elaichi Chai", desc: "Strong premium black tea dust slow-simmered in whole milk with freshly ground cardamom.", price: 290, category: "hot", icon: "fa-mug-hot" },
+            { id: 2, name: "Kashmiri Pink Tea", desc: "Creamy pink tea rich with notes of cardamom, salted broth, crushed pistachios & almonds.", price: 420, category: "hot", icon: "fa-mug-saucer" },
+            { id: 3, name: "Mughalai Saffron Latte", desc: "Craft single-origin espresso pulled over saffron-infused velvet milk foam.", price: 590, category: "hot", icon: "fa-mug-hot" },
+            { id: 4, name: "Signature Peshawari Kahwa", desc: "Clear green tea leaves infused with lemon zest, mint leaves, and green cardamom.", price: 240, category: "hot", icon: "fa-mug-saucer" },
+            { id: 5, name: "Charsi Espresso Shot", desc: "Our intense, dark roasted house blend, extremely high crema extraction.", price: 340, category: "hot", icon: "fa-glass-water" },
+            
+            // ICED CRAFTS
+            { id: 6, name: "Iced Karak Frappé", desc: "Chilled Karak tea blended beautifully with condensed milk, ice, and sweet vanilla cream.", price: 490, category: "cold", icon: "fa-whiskey-glass" },
+            { id: 7, name: "Rose Foam Cold Brew", desc: "18-hour slow steeped specialty cold brew layered with fragrant Rooh-Afza rose cold foam.", price: 480, category: "cold", icon: "fa-glass-water" },
+            { id: 8, name: "Mango Lassi Espresso Shake", desc: "Thick sweet organic mango yogurt shake layered with a bold shot of dark espresso.", price: 550, category: "cold", icon: "fa-glass-water" },
+            { id: 9, name: "Peshawari Chaman Lemon Fizz", desc: "Refreshing crushed ice beverage with fresh lemons, mint foliage, and Peshawari spices.", price: 390, category: "cold", icon: "fa-glass-water" },
+            
+            // DESI TREATS
+            { id: 10, name: "Pistachio Shahi Tukra", desc: "Warm rich fried brioche soaked in dense cardamom-saffron milk, fully loaded with pistachios.", price: 490, category: "bakery", icon: "fa-cookie" },
+            { id: 11, name: "Nutella Paratha Roll", desc: "Crispy flaky lachha paratha loaded with melted chocolate hazelnut cream.", price: 390, category: "bakery", icon: "fa-cookie" },
+            { id: 12, name: "Almond Cardamom Cake Slice", desc: "Incredibly moist layered sponge cake infused with cardamoms and local almond slivers.", price: 350, category: "bakery", icon: "fa-cookie" }
+        ];
+
+        /* --- Interactive Application State --- */
+        let cart = [];
+        let activeCategory = "hot";
+
+        /* --- DOM Element References --- */
+        const menuGridEl = document.getElementById("menu-items-grid");
+        const cartBadgeEl = document.getElementById("cart-badge");
+        const cartItemsBoxEl = document.getElementById("cart-items-box");
+        const emptyCartMsgEl = document.getElementById("empty-cart-message");
+        const cartFooterEl = document.getElementById("cart-footer");
+        const cartSubtotalEl = document.getElementById("cart-subtotal");
+        const cartTaxEl = document.getElementById("cart-tax");
+        const cartTotalEl = document.getElementById("cart-total");
+        const cartDrawerEl = document.getElementById("cart-drawer");
+        const backdropEl = document.getElementById("backdrop");
+        const mobileNavEl = document.getElementById("mobile-nav");
+        const mobileNavIconEl = document.getElementById("mobile-nav-icon");
+
+        /* --- Initial Startup Trigger --- */
+        window.onload = function() {
+            renderMenu();
+            setReservationDefaultDate();
+        };
+
+        /* --- Menu Filtering & Rendering Logic with Click-to-Add Handler --- */
+        function renderMenu() {
+            menuGridEl.innerHTML = "";
+            const filtered = MENU_PRODUCTS.filter(item => item.category === activeCategory);
+
+            filtered.forEach(item => {
+                const card = document.createElement("div");
+                // Class contains cursor pointer and layout transition classes for full card clicking
+                card.className = "bg-white rounded-2xl shadow-md hover:shadow-xl border-2 border-transparent hover:border-gold p-6 flex flex-col justify-between transform hover:-translate-y-1 transition-all duration-300 cursor-pointer relative group overflow-hidden";
+                card.setAttribute("tabindex", "0");
+                card.setAttribute("aria-label", `Add ${item.name} to order`);
+                
+                // Clicking *anywhere* on the card adds it to the cart
+                card.addEventListener('click', function(e) {
+                    // Prevent multi trigger if button clicked specifically
+                    if (e.target.closest('.card-btn')) {
+                        return; 
+                    }
+                    triggerCardPulseAndAdd(card, item.id);
+                });
+
+                // Support Enter/Space key navigation
+                card.addEventListener('keydown', function(e) {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        triggerCardPulseAndAdd(card, item.id);
+                    }
+                });
+                
+                card.innerHTML = `
+                    <!-- Quick Add Hover Indicator Badge -->
+                    <div class="absolute top-3 right-3 bg-gold text-pakistan-950 text-xs font-bold px-2.5 py-1 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300 shadow flex items-center gap-1 z-10">
+                        <i class="fa-solid fa-plus text-[10px]"></i> Quick Add
+                    </div>
+
+                    <div class="space-y-4">
+                        <div class="flex justify-between items-start">
+                            <div class="bg-pakistan-50 text-gold-dark text-2xl w-12 h-12 rounded-full flex items-center justify-center border border-pakistan-100 group-hover:bg-gold group-hover:text-pakistan-950 transition-colors duration-300">
+                                <i class="fa-solid ${item.icon}"></i>
+                            </div>
+                            <span class="text-xl font-bold text-pakistan-900 font-serif">Rs. ${item.price}</span>
+                        </div>
+                        <div>
+                            <h3 class="font-serif font-bold text-xl text-pakistan-950 group-hover:text-gold-dark transition-colors">${item.name}</h3>
+                            <p class="text-sm text-coffee-600 mt-2 leading-relaxed">${item.desc}</p>
+                        </div>
+                    </div>
+                    <div class="pt-6 mt-4 border-t border-coffee-100">
+                        <button onclick="addToCart(${item.id})" class="card-btn w-full py-2.5 bg-pakistan-950 hover:bg-gold text-white hover:text-pakistan-950 font-bold rounded-lg text-sm transition-all duration-300 flex items-center justify-center gap-2">
+                            <i class="fa-solid fa-cart-plus"></i> Add to Order
+                        </button>
+                    </div>
+                `;
+                menuGridEl.appendChild(card);
+            });
+        }
+
+        // Pulse FX for visual feedback on click
+        function triggerCardPulseAndAdd(cardElement, productId) {
+            cardElement.classList.add('click-active-pulse');
+            setTimeout(() => {
+                cardElement.classList.remove('click-active-pulse');
+            }, 400);
+            addToCart(productId);
+        }
+
+        function filterMenu(category) {
+            activeCategory = category;
+            
+            // Toggle active visual states on Tab buttons
+            document.querySelectorAll(".menu-tab-btn").forEach(btn => {
+                btn.className = "menu-tab-btn w-1/3 py-2 text-sm font-semibold rounded-full text-center transition-all duration-300 text-coffee-700 hover:text-coffee-950";
+            });
+
+            const activeBtn = document.getElementById(`btn-${category}`);
+            if (activeBtn) {
+                activeBtn.className = "menu-tab-btn active w-1/3 py-2 text-sm font-semibold rounded-full text-center transition-all duration-300 bg-pakistan-950 text-gold shadow-md";
+            }
+
+            renderMenu();
+        }
+
+        /* --- Cart Logic Systems --- */
+        function addToCart(productId) {
+            const product = MENU_PRODUCTS.find(p => p.id === productId);
+            if (!product) return;
+
+            const existingItem = cart.find(item => item.product.id === productId);
+
+            if (existingItem) {
+                existingItem.quantity += 1;
+            } else {
+                cart.push({ product, quantity: 1 });
+            }
+
+            updateCartUI();
+            showToast(`Added ${product.name} to your order!`, "success");
+        }
+
+        function adjustQuantity(productId, amount) {
+            const itemIndex = cart.findIndex(item => item.product.id === productId);
+            if (itemIndex === -1) return;
+
+            cart[itemIndex].quantity += amount;
+
+            if (cart[itemIndex].quantity <= 0) {
+                cart.splice(itemIndex, 1);
+            }
+
+            updateCartUI();
+        }
+
+        function updateCartUI() {
+            // Update Badges & Floating Counter
+            const totalQuantity = cart.reduce((total, item) => total + item.quantity, 0);
+            if (totalQuantity > 0) {
+                cartBadgeEl.innerText = totalQuantity;
+                cartBadgeEl.classList.remove("opacity-0");
+                cartBadgeEl.classList.add("scale-110");
+                setTimeout(() => cartBadgeEl.classList.remove("scale-110"), 200);
+            } else {
+                cartBadgeEl.classList.add("opacity-0");
+            }
+
+            // Render items in Sidebar Box
+            const itemRows = cartItemsBoxEl.querySelectorAll(".cart-row-item");
+            itemRows.forEach(row => row.remove());
+
+            if (cart.length === 0) {
+                emptyCartMsgEl.classList.remove("hidden");
+                cartFooterEl.classList.add("hidden");
+            } else {
+                emptyCartMsgEl.classList.add("hidden");
+                cartFooterEl.classList.remove("hidden");
+
+                let subtotal = 0;
+
+                cart.forEach(item => {
+                    const linePrice = item.product.price * item.quantity;
+                    subtotal += linePrice;
+
+                    const row = document.createElement("div");
+                    row.className = "cart-row-item flex items-center justify-between gap-4 p-4 bg-coffee-50 border border-coffee-200 rounded-xl transition-all";
+                    row.innerHTML = `
+                        <div class="flex-1">
+                            <h4 class="font-bold text-pakistan-950 text-sm">${item.product.name}</h4>
+                            <span class="text-xs text-gold-dark font-bold">Rs. ${item.product.price} each</span>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <button onclick="adjustQuantity(${item.product.id}, -1)" class="w-7 h-7 bg-white hover:bg-coffee-200 border border-coffee-300 rounded-full flex items-center justify-center font-bold text-sm text-coffee-800 transition-colors">-</button>
+                            <span class="font-bold text-sm text-pakistan-950 w-6 text-center">${item.quantity}</span>
+                            <button onclick="adjustQuantity(${item.product.id}, 1)" class="w-7 h-7 bg-white hover:bg-coffee-200 border border-coffee-300 rounded-full flex items-center justify-center font-bold text-sm text-coffee-800 transition-colors">+</button>
+                        </div>
+                        <div class="text-right">
+                            <span class="font-bold text-pakistan-950 text-sm">Rs. ${linePrice}</span>
+                        </div>
+                    `;
+                    cartItemsBoxEl.appendChild(row);
+                });
+
+                // Calculate Totals with Pakistan Tax Rate (Estimated Punjab Sales Tax 16%)
+                const tax = subtotal * 0.16;
+                const total = subtotal + tax;
+
+                cartSubtotalEl.innerText = `Rs. ${Math.round(subtotal)}`;
+                cartTaxEl.innerText = `Rs. ${Math.round(tax)}`;
+                cartTotalEl.innerText = `Rs. ${Math.round(total)}`;
+            }
+        }
+
+        /* --- Drawer Layout Handlers --- */
+        function toggleCart() {
+            const isOpened = !cartDrawerEl.classList.contains("translate-x-full");
+            if (isOpened) {
+                closeAllDrawers();
+            } else {
+                cartDrawerEl.classList.remove("translate-x-full");
+                backdropEl.classList.remove("hidden");
+                document.body.classList.add("overflow-hidden");
+            }
+        }
+
+        function closeAllDrawers() {
+            cartDrawerEl.classList.add("translate-x-full");
+            backdropEl.classList.add("hidden");
+            document.body.classList.remove("overflow-hidden");
+        }
+
+        function toggleMobileNav() {
+            const isOpen = !mobileNavEl.classList.contains("hidden");
+            if (isOpen) {
+                mobileNavEl.classList.add("hidden");
+                mobileNavIconEl.className = "fa-solid fa-bars text-2xl";
+            } else {
+                mobileNavEl.classList.remove("hidden");
+                mobileNavIconEl.className = "fa-solid fa-xmark text-2xl";
+            }
+        }
+
+        /* --- Booking Helper --- */
+        function setReservationDefaultDate() {
+            const dateInput = document.getElementById("res-date");
+            const today = new Date();
+            const year = today.getFullYear();
+            const month = String(today.getMonth() + 1).padStart(2, '0');
+            const day = String(today.getDate()).padStart(2, '0');
+            dateInput.value = `${year}-${month}-${day}`;
+            dateInput.min = `${year}-${month}-${day}`;
+        }
+
+        /* --- Submit Forms Integrations --- */
+        function handleReservation(e) {
+            e.preventDefault();
+            const name = document.getElementById("res-name").value;
+            const date = document.getElementById("res-date").value;
+            const time = document.getElementById("res-time").value;
+            const guests = document.getElementById("res-guests").value;
+            const section = document.querySelector('input[name="section-choice"]:checked').value;
+
+            const mappedSection = section === 'baithak' ? 'Mughal Baithak' : section === 'vaults' ? 'Classic Library Vaults' : 'Glow Courtyard';
+
+            showToast(`Shukriya, ${name}! Your cozy table spot at ${mappedSection} (${guests} Guest/s) is reserved for ${date} at ${time}. We look forward to hosting you!`, "success", 8000);
+            
+            document.getElementById("reservation-form").reset();
+            setReservationDefaultDate();
+        }
+
+        function handleNewsletter(e) {
+            e.preventDefault();
+            const email = document.getElementById("news-email").value;
+            showToast(`Khush Amdeed! ${email} has been subscribed to Aroma Brew Club. Sitar Mehfil schedules and discount codes will land in your inbox soon!`, "success", 6000);
+            document.getElementById("news-email").value = "";
+        }
+
+        function checkoutOrder() {
+            showToast("Shukriya! Order Placed! Your craft brews are brewing. We will see you soon in Cafe Dastaan!", "success", 7000);
+            cart = [];
+            updateCartUI();
+            closeAllDrawers();
+        }
+
+        /* --- Custom Toast Engine (To avoid alert() blocks) --- */
+        function showToast(message, type = "info", duration = 4000) {
+            const container = document.getElementById("toast-container");
+            const toast = document.createElement("div");
+            
+            toast.className = "bg-pakistan-950 text-white p-4 rounded-xl shadow-2xl border-l-4 flex items-start gap-3 transform translate-y-2 opacity-0 transition-all duration-300";
+            
+            if (type === "success") {
+                toast.classList.add("border-gold");
+            } else {
+                toast.classList.add("border-coffee-400");
+            }
+
+            const icon = type === "success" ? "fa-circle-check text-gold" : "fa-circle-info text-coffee-300";
+
+            toast.innerHTML = `
+                <span class="text-xl mt-0.5"><i class="fa-solid ${icon}"></i></span>
+                <div class="flex-1">
+                    <p class="text-sm font-medium leading-relaxed">${message}</p>
+                </div>
+                <button onclick="this.parentElement.remove()" class="text-coffee-400 hover:text-white transition-colors" aria-label="Close Toast">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            `;
+
+            container.appendChild(toast);
+
+            // Animate in
+            setTimeout(() => {
+                toast.classList.remove("translate-y-2", "opacity-0");
+            }, 10);
+
+            // Auto dismiss
+            setTimeout(() => {
+                toast.classList.add("translate-y-2", "opacity-0");
+                setTimeout(() => toast.remove(), 300);
+            }, duration);
+        }
+    </script>
+
+</body>
+</html>
